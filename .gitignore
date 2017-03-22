@@ -1,0 +1,6 @@
+**/*.iml
+.idea
+*.releaseBackup
+*.dev*.yml
+target
+dump.rdb

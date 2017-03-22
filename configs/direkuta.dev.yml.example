@@ -1,0 +1,58 @@
+metrics_enabled: false
+debug: true
+graphite:
+  host: carbon.hostedgraphite.com
+  api_key: 7509c0ff-4db5-4cae-91ee-6e78ff13b336
+  reporting_interval_in_seconds: 30
+  include_metrics:
+    - io.dropwizard
+    - com.hello
+
+server:
+  adminMinThreads: 1
+  adminMaxThreads: 64
+  adminContextPath: /
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 1111
+  adminConnectors:
+    - type: http
+      port: 6667
+#  requestLog:
+#      appenders:
+#        - type: console
+#        - type: file
+#          currentLogFilename: ./log/direkuta/direkuta-access.log
+#          threshold: ALL
+#          archive: true
+#          archivedLogFilenamePattern: ./log/direkuta/direkuta-access-%d{yyyy-MM-dd}.log.gz
+#          archivedFileCount: 7
+#        - type: papertrail
+#          host: logs2.papertrailapp.com
+#          port: 11366
+#          ident: direkuta
+
+logging:
+  level: INFO
+  loggers:
+    com.hello.direkuta: DEBUG
+  appenders:
+    - type: console
+      threshold: DEBUG
+#    - type: file
+#      threshold: INFO
+#      currentLogFilename: /var/log/direkuta/direkuta.log
+#      archivedLogFilenamePattern: /var/log/direkuta/direkuta-%d{yyyy-MM-dd}.log.gz
+#      archivedFileCount: 5
+#    - type: papertrail
+#      host: logs2.papertrailapp.com
+#      port: 11366
+#      ident: direkuta
+      # timezone: UTC
+      # facility: USER
+      # sendLocalName: true
+
+redis:
+  host: localhost
+  port: 6379
