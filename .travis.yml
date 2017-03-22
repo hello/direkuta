@@ -7,6 +7,8 @@ env:
   global:
   - APP_NAME=direkuta
   - BUILD_NUMBER=0.0.$TRAVIS_BUILD_NUMBER
+  - secure: gigzIRvGXhE6B7UJVdsKYOkuYKm3c6QdBiYYxFtnBYFaKC4m3XQyNa4IRwI+S1f6vTlMUhldxBEPs+f1UOAg1pUUbL2bJZwIAq9AymoRt18hyh5gIi2SUEAcXegMmo5tCH4ZePEa17d32yb281itF4rT+adIF3RLK12f68Fu5zee3+Zzyo57opCMsoVPzYuyu6VdolBqNo1E/ak7DlKSy+k5wJ2GuJIze7ZUMZw6trHGzNxslwsMLa/QN8plB1YjJy8A7g8Xt/O3R9l4dWBFpXtFMx/7HfdzTQ5+dnmziPR77pryYMBv8O2ExSfMGbbmjGxu9REFMfTGbOQuATLXB+S9uYY8amUtHAcWXjHaY8qR773SQADYjrNWxq0OZt7hvuomPk64r336wx8DVZa6fauP9gO7bJZkAQW57wpDca4ri/8h/fksr0+BKawAxUHQMLT5qmorfO+3/HbikDYDKPeW3VP7Mr22dsIZXXQAEKqOuUnMrCE+uvYlX5Ll5tzHlO/mfe5XsIodtdXhwx5fYSpwI6GE12xUtn2IZ9ohWV3n+QOq5Tv2IeC+bj98yXvIXp7E+677y4lVDFidDvB5h7AlPhiljADph4SSeLFoMtKJMzphBEm6SCfATazxaObe+owDnLe2Bilt5ozbE66Gg1NwJLlY3/eElnGguQ7ePEU=
+  - secure: YBzQMFL+JPds5sVwyEIjJpB7RZ3+sZ1zaCltw4NJKWd045tEyQyMldsFrSWoPOlabn0Mf3QE1s9p9v3G8FkJ+VAtAKvP9kBa6Mdh6YUEv8vT1RPndn3sRwTlXeX/z7Y3jntzfKzncKH3eNjC4RXQcm1o8ruc2gd4J4Y1OpQP/pyeRe6kAr5F609Bo4q2P1uBgjDRt8MtxDtRkf75P+eTnrbVrYMA8ehVFpeQcCxXQxj1oERR4kepTy9xc91fWwZr6gRo5q/85fnhMqPBavMCDs3qNAAmJuGhSQrwtEsyooLQtjA/bhxD8J0zqXqe/Dvub5vc2+oNqva6PbdKP92Cp/SkQs58iKTcfeICzRTTcwlAnWxEFw+/ZOSHXxgQo4XTiueO8u75R5yymr4IPJ9dh+5jERDT1sv3MguHVkqHsLYM2hnoDvSnn7CvchjzV8/G2fLNj5pWN6D4rKjnToqyaP3ZsDuUiwY1mBTM9gscAwfb+N4AJeHuqtfyiomADtjhVB4Upluqe5Pl6V0S6lyG1wdX7SWhc6z+4zN0WUuTy0sV1YaOLkzAiYtZKb5Q238mXTja+3EVkcli7rEQ1SNY7eKz5nhYoqo8BwboZmJ7Opxrl0Lndw+yKIzKjYxiv3Ty8wLgqxd+8cnRYpDbtITUI9f5FyqgqOTwfKvmIVXqPSI=
 script:
 - echo "MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=512m'" > ~/.mavenrc
 - export TEMP_DIR="/tmp/$APP_NAME"
@@ -25,7 +27,8 @@ before_deploy:
 - gem install json -v 1.8.3
 - gem install fpm
 - cp target/$APP_NAME-$BUILD_NUMBER.jar $TEMP_DIR/opt/hello/$APP_NAME.jar
-- fpm --force -s dir -C $TEMP_DIR -t deb --name "$APP_NAME" --version $BUILD_NUMBER --config-files etc/hello .
+- fpm --force -s dir -C $TEMP_DIR -t deb --name "$APP_NAME" --version $BUILD_NUMBER
+  --config-files etc/hello .
 - cp ${APP_NAME}_${BUILD_NUMBER}_amd64.deb configs/
 after_deploy:
 - git config --global user.email "builds@travis-ci.com"
@@ -35,8 +38,8 @@ after_deploy:
 - git push --quiet git@github.com:hello/direkuta.git --tags
 deploy:
 - provider: s3
-  access_key_id: $CI_DEPLOY_USERNAME
-  secret_access_key: $CI_DEPLOY_PASSWORD
+  access_key_id: "$CI_DEPLOY_USERNAME"
+  secret_access_key: "$CI_DEPLOY_PASSWORD"
   bucket: hello-deploy
   skip_cleanup: true
   local_dir: configs
@@ -51,4 +54,3 @@ branches:
 notifications:
   email:
   - josef+travis-direkuta@sayhello.com
-
