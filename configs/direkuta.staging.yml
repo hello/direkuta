@@ -19,8 +19,8 @@ server:
   adminConnectors:
     - type: http
       port: 6667
-#  requestLog:
-#      appenders:
+  requestLog:
+      appenders:
 #        - type: console
         - type: file
           currentLogFilename: /var/log/direkuta/direkuta-access.log
@@ -38,8 +38,8 @@ logging:
   loggers:
     com.hello.direkuta: DEBUG
   appenders:
-    - type: console
-      threshold: DEBUG
+#    - type: console
+#      threshold: DEBUG
     - type: file
       threshold: INFO
       currentLogFilename: /var/log/direkuta/direkuta.log
