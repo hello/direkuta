@@ -2,6 +2,7 @@ package com.hello.direkuta.handlers;
 
 import com.google.common.collect.Sets;
 
+import com.amazonaws.util.EC2MetadataUtils;
 import com.hello.direkuta.models.EvoEvent;
 
 import org.slf4j.Logger;
@@ -42,9 +43,10 @@ public class OutStreamEventHandler extends EventHandler {
 
     Jedis jedis = null;
 
+    final String instanceId = EC2MetadataUtils.getInstanceId();
     try {
       jedis = jedisPool.getResource();
-      final String redisKey = event.eventType.toString() + REDIS_KEY_SEPARATOR + event.payload.get("name");
+      final String redisKey = instanceId + REDIS_KEY_SEPARATOR + event.payload.get("name") + REDIS_KEY_SEPARATOR + event.eventType.toString();
       jedis.zadd(REDIS_KEY, event.timestamp, redisKey);
 
     }catch (JedisDataException exception) {
