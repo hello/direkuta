@@ -2,11 +2,13 @@ package com.hello.direkuta;
 
 import com.google.common.collect.Sets;
 
+import com.hello.direkuta.clients.EvoStreamClient;
+import com.hello.direkuta.configuration.DirekutaConfiguration;
 import com.hello.direkuta.handlers.EventHandler;
 import com.hello.direkuta.handlers.OutStreamEventHandler;
 import com.hello.direkuta.resources.v1.EventResources;
+import com.hello.direkuta.resources.v1.MediaServerResources;
 import com.hello.suripu.coredropwizard.util.CustomJSONExceptionMapper;
-import com.hello.direkuta.configuration.DirekutaConfiguration;
 
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -53,8 +55,10 @@ public class Direkuta extends Application<DirekutaConfiguration> {
 
         final Set<EventHandler> eventHandlers = Sets.newHashSet();
         eventHandlers.add(new OutStreamEventHandler(jedisPool));
-
         environment.jersey().register(new EventResources(eventHandlers));
+
+        final EvoStreamClient evoStreamClient = EvoStreamClient.create();
+        environment.jersey().register(new MediaServerResources(evoStreamClient));
 
     }
 }

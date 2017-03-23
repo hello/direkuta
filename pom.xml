@@ -7,12 +7,13 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <dropwizard.version>1.0.0</dropwizard.version>
-    <metrics.version>3.1.0</metrics.version>
-    <java.version>1.8</java.version>
-    <suripu.version>0.8.5898</suripu.version>
-    <jodatime.version>2.9.6</jodatime.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <dropwizard.version>1.0.0</dropwizard.version>
+        <metrics.version>3.1.0</metrics.version>
+        <java.version>1.8</java.version>
+        <suripu.version>0.8.5898</suripu.version>
+        <jodatime.version>2.9.6</jodatime.version>
+        <retrofit.version>2.1.0</retrofit.version>
     </properties>
 
     <distributionManagement>
@@ -184,6 +185,16 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>${retrofit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-jackson</artifactId>
+            <version>${retrofit.version}</version>
         </dependency>
     </dependencies>
     <build>
