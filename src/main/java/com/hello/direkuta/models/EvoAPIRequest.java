@@ -22,12 +22,6 @@ public class EvoAPIRequest {
     this.params = params;
   }
 
-  public enum Result {
-    SUCCESS,
-    FAILURE,
-    ERROR
-  }
-
   public static class Builder {
     private String commandName;
     private Map<String, String> params;

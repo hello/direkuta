@@ -1,6 +1,6 @@
 package com.hello.direkuta.services;
 
-import java.util.Map;
+import com.hello.direkuta.models.APIResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,5 +12,6 @@ import retrofit2.http.Query;
  */
 public interface EvoStreamService {
   @GET("/{commandName}")
-  Call<Map<String, Object>> get(@Path("commandName") String commandName, @Query("params") String params);
+  Call<APIResponse> get(@Path("commandName") String commandName, @Query("params") String params);
+
 }

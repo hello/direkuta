@@ -2,14 +2,15 @@ package com.hello.direkuta.clients;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hello.direkuta.models.APIResponse;
 import com.hello.direkuta.models.EvoAPIRequest;
+import com.hello.direkuta.models.EvoResult;
 import com.hello.direkuta.services.EvoStreamService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -51,21 +52,21 @@ public class EvoStreamClient {
     return new EvoStreamClient(service);
   }
 
-  public EvoAPIRequest.Result executeCommand(final EvoAPIRequest request) {
-    final Call<Map<String, Object>> call = service.get(request.getCommandName(), request.getEncodedParams());
+  public EvoResult executeRequest(final EvoAPIRequest request) {
+    final Call<APIResponse> call = service.get(request.getCommandName(), request.getEncodedParams());
 
     try {
-      final Response<Map<String, Object>> response = call.execute();
+      final Response<APIResponse> response = call.execute();
       if(response.isSuccessful()) {
-        final Map<String, Object> resp = response.body();
+        final APIResponse resp = response.body();
         LOGGER.info("action=api-request result=success response={}", resp.toString());
-        return EvoAPIRequest.Result.SUCCESS;
+        return new EvoResult(EvoResult.ResultType.SUCCESS, resp);
       }
     } catch (IOException e) {
       LOGGER.error("error=api-request msg={}", e.getMessage());
     }
 
     LOGGER.error("error=api-request-failure");
-    return EvoAPIRequest.Result.FAILURE;
+    return EvoResult.create(EvoResult.ResultType.FAILURE);
   }
 }
