@@ -56,3 +56,7 @@ logging:
 redis:
   host: localhost
   port: 6379
+
+evostream:
+  default_alias_expiration: -60
+  rtsp_outbound_port: 5544
