@@ -49,6 +49,15 @@ public class DirekutaConfiguration extends Configuration {
         return redisConfiguration;
     }
 
+    @Valid
+    @NotNull
+    @JsonProperty("evostream")
+    private EvoStreamConfiguration evoStreamConfiguration;
+
+    public EvoStreamConfiguration getEvoStreamConfiguration() {
+        return evoStreamConfiguration;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

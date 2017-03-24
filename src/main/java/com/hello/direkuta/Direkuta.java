@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 
 import com.hello.direkuta.clients.EvoStreamClient;
 import com.hello.direkuta.configuration.DirekutaConfiguration;
+import com.hello.direkuta.configuration.EvoStreamConfiguration;
 import com.hello.direkuta.handlers.EventHandler;
 import com.hello.direkuta.handlers.OutStreamEventHandler;
 import com.hello.direkuta.resources.v1.EventResources;
@@ -58,7 +59,8 @@ public class Direkuta extends Application<DirekutaConfiguration> {
         environment.jersey().register(new EventResources(eventHandlers));
 
         final EvoStreamClient evoStreamClient = EvoStreamClient.create();
-        environment.jersey().register(new MediaServerResources(evoStreamClient));
+        final EvoStreamConfiguration evoStreamConfiguration = configuration.getEvoStreamConfiguration();
+        environment.jersey().register(new MediaServerResources(evoStreamClient, evoStreamConfiguration));
 
     }
 }
